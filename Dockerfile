@@ -12,10 +12,8 @@ RUN npm ci
 
 RUN npm run build
 
-COPY . .
+COPY . /client/build
+
+WORKDIR /
 
 CMD ["node", "server.js"]
-
-
-
-
