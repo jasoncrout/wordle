@@ -4,40 +4,40 @@ import "./Keyboard.css";
 function Keyboard() {
   const [keyboard] = useState([
     [
-      { key: "q", size: 1 },
-      { key: "w", size: 1 },
-      { key: "e", size: 1 },
-      { key: "r", size: 1 },
-      { key: "t", size: 1 },
-      { key: "y", size: 1 },
-      { key: "u", size: 1 },
-      { key: "i", size: 1 },
-      { key: "o", size: 1 },
-      { key: "p", size: 1 },
+      { value: "q", size: 1 },
+      { value: "w", size: 1 },
+      { value: "e", size: 1 },
+      { value: "r", size: 1 },
+      { value: "t", size: 1 },
+      { value: "y", size: 1 },
+      { value: "u", size: 1 },
+      { value: "i", size: 1 },
+      { value: "o", size: 1 },
+      { value: "p", size: 1 },
     ],
     [
-      { key: "spacer", size: 0.5 },
-      { key: "a", size: 1 },
-      { key: "s", size: 1 },
-      { key: "d", size: 1 },
-      { key: "f", size: 1 },
-      { key: "g", size: 1 },
-      { key: "h", size: 1 },
-      { key: "j", size: 1 },
-      { key: "k", size: 1 },
-      { key: "l", size: 1 },
-      { key: "spacer", size: 0.5 },
+      { value: "spacer", size: 0.5 },
+      { value: "a", size: 1 },
+      { value: "s", size: 1 },
+      { value: "d", size: 1 },
+      { value: "f", size: 1 },
+      { value: "g", size: 1 },
+      { value: "h", size: 1 },
+      { value: "j", size: 1 },
+      { value: "k", size: 1 },
+      { value: "l", size: 1 },
+      { value: "spacer", size: 0.5 },
     ],
     [
-      { key: "enter", size: 1.5 },
-      { key: "z", size: 1 },
-      { key: "x", size: 1 },
-      { key: "c", size: 1 },
-      { key: "v", size: 1 },
-      { key: "b", size: 1 },
-      { key: "n", size: 1 },
-      { key: "m", size: 1 },
-      { key: "⌫", size: 1.5 },
+      { value: "enter", size: 1.5 },
+      { value: "z", size: 1 },
+      { value: "x", size: 1 },
+      { value: "c", size: 1 },
+      { value: "v", size: 1 },
+      { value: "b", size: 1 },
+      { value: "n", size: 1 },
+      { value: "m", size: 1 },
+      { value: "⌫", size: 1.5 },
     ],
   ]);
 
@@ -46,7 +46,7 @@ function Keyboard() {
       {keyboard.map((row, rowIndex) => (
         <div className="Keyboard-row" key={rowIndex}>
           {row.map((cell, cellIndex) => {
-            if (cell.key === "spacer") {
+            if (cell.value === "spacer") {
               return (
                 <div
                   className="Keyboard-spacer"
@@ -61,7 +61,7 @@ function Keyboard() {
                   key={cellIndex}
                   style={{ flex: cell.size }}
                 >
-                  {cell.key}
+                  {cell.value}
                 </button>
               );
             }

@@ -2,7 +2,7 @@
   display: block;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  margin: 0 8px;
 }
 
 .Keyboard-row {
