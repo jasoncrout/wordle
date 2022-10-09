@@ -3,12 +3,48 @@ import "./Board.css";
 
 function Board() {
   const [board] = useState([
-    [" ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " "],
+    [
+      { value: " " },
+      { value: " " },
+      { value: " " },
+      { value: " " },
+      { value: " " },
+    ],
+    [
+      { value: " " },
+      { value: " " },
+      { value: " " },
+      { value: " " },
+      { value: " " },
+    ],
+    [
+      { value: " " },
+      { value: " " },
+      { value: " " },
+      { value: " " },
+      { value: " " },
+    ],
+    [
+      { value: " " },
+      { value: " " },
+      { value: " " },
+      { value: " " },
+      { value: " " },
+    ],
+    [
+      { value: " " },
+      { value: " " },
+      { value: " " },
+      { value: " " },
+      { value: " " },
+    ],
+    [
+      { value: " " },
+      { value: " " },
+      { value: " " },
+      { value: " " },
+      { value: " " },
+    ],
   ]);
 
   return (
@@ -18,7 +54,7 @@ function Board() {
           <div className="Board-row" key={rowIndex}>
             {row.map((cell, cellIndex) => (
               <div className="Board-cell" key={cellIndex}>
-                {cell}
+                {cell.value}
               </div>
             ))}
           </div>
