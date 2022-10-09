@@ -1,0 +1,10 @@
+.Header {
+  width: 100%;
+  border-bottom: 1px solid #3a3a3c;
+}
+
+h1 {
+  font-weight: 900;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}

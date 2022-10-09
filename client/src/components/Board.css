@@ -1,0 +1,29 @@
+.Board {
+  margin: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Board-game {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  grid-gap: 5px;
+  box-sizing: border-box;
+  width: 300px;
+  height: 350px;
+}
+
+.Board-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 5px;
+}
+
+.Board-cell {
+  display: inline-flex;
+  height: 100%;
+  width: 100%;
+  border: 2px solid #3a3a3c;
+  box-sizing: border-box;
+}
