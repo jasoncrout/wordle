@@ -1,45 +1,54 @@
 import { useState } from "react";
 import "./Keyboard.css";
 
-function Keyboard() {
+interface KeyboardProps {
+  board: { value: string }[][];
+  setBoard: (value: string) => void;
+}
+
+function Keyboard({ board, setBoard }: KeyboardProps) {
   const [keyboard] = useState([
     [
-      { value: "q", size: 1 },
-      { value: "w", size: 1 },
-      { value: "e", size: 1 },
-      { value: "r", size: 1 },
-      { value: "t", size: 1 },
-      { value: "y", size: 1 },
-      { value: "u", size: 1 },
-      { value: "i", size: 1 },
-      { value: "o", size: 1 },
-      { value: "p", size: 1 },
+      { value: "Q", size: 1 },
+      { value: "W", size: 1 },
+      { value: "E", size: 1 },
+      { value: "R", size: 1 },
+      { value: "T", size: 1 },
+      { value: "Y", size: 1 },
+      { value: "U", size: 1 },
+      { value: "I", size: 1 },
+      { value: "O", size: 1 },
+      { value: "P", size: 1 },
     ],
     [
       { value: "spacer", size: 0.5 },
-      { value: "a", size: 1 },
-      { value: "s", size: 1 },
-      { value: "d", size: 1 },
-      { value: "f", size: 1 },
-      { value: "g", size: 1 },
-      { value: "h", size: 1 },
-      { value: "j", size: 1 },
-      { value: "k", size: 1 },
-      { value: "l", size: 1 },
+      { value: "A", size: 1 },
+      { value: "S", size: 1 },
+      { value: "D", size: 1 },
+      { value: "F", size: 1 },
+      { value: "G", size: 1 },
+      { value: "H", size: 1 },
+      { value: "J", size: 1 },
+      { value: "K", size: 1 },
+      { value: "L", size: 1 },
       { value: "spacer", size: 0.5 },
     ],
     [
       { value: "enter", size: 1.5 },
-      { value: "z", size: 1 },
-      { value: "x", size: 1 },
-      { value: "c", size: 1 },
-      { value: "v", size: 1 },
-      { value: "b", size: 1 },
-      { value: "n", size: 1 },
-      { value: "m", size: 1 },
+      { value: "Z", size: 1 },
+      { value: "X", size: 1 },
+      { value: "C", size: 1 },
+      { value: "V", size: 1 },
+      { value: "B", size: 1 },
+      { value: "N", size: 1 },
+      { value: "M", size: 1 },
       { value: "⌫", size: 1.5 },
     ],
   ]);
+
+  const onKeyPress = (value: string) => {
+    setBoard(value);
+  };
 
   return (
     <div className="Keyboard">
@@ -60,6 +69,7 @@ function Keyboard() {
                   className="Keyboard-cell"
                   key={cellIndex}
                   style={{ flex: cell.size }}
+                  onClick={() => onKeyPress(cell.value)}
                 >
                   {cell.value}
                 </button>
