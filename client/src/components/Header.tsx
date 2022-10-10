@@ -1,9 +1,9 @@
-import './Header.css';
+import "./Header.css";
 
 function Header() {
   return (
     <div>
-      <header className='Header'>
+      <header className="Header">
         <h1>wordle</h1>
       </header>
     </div>

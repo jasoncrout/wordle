@@ -1,52 +1,10 @@
-import { useState } from "react";
 import "./Board.css";
 
-function Board() {
-  const [board] = useState([
-    [
-      { value: " " },
-      { value: " " },
-      { value: " " },
-      { value: " " },
-      { value: " " },
-    ],
-    [
-      { value: " " },
-      { value: " " },
-      { value: " " },
-      { value: " " },
-      { value: " " },
-    ],
-    [
-      { value: " " },
-      { value: " " },
-      { value: " " },
-      { value: " " },
-      { value: " " },
-    ],
-    [
-      { value: " " },
-      { value: " " },
-      { value: " " },
-      { value: " " },
-      { value: " " },
-    ],
-    [
-      { value: " " },
-      { value: " " },
-      { value: " " },
-      { value: " " },
-      { value: " " },
-    ],
-    [
-      { value: " " },
-      { value: " " },
-      { value: " " },
-      { value: " " },
-      { value: " " },
-    ],
-  ]);
+interface BoardProps {
+  board: { value: string }[][];
+}
 
+function Board({ board }: BoardProps) {
   return (
     <div className="Board">
       <div className="Board-game">
