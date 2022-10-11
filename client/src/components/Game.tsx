@@ -13,15 +13,51 @@ function Game() {
   }, []);
 
   const [board, setBoard] = useState([
-    [{ value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }],
-    [{ value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }],
-    [{ value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }],
-    [{ value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }],
-    [{ value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }],
-    [{ value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }],
+    [
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+    ],
+    [
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+    ],
+    [
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+    ],
+    [
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+    ],
+    [
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+    ],
+    [
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+    ],
   ]);
 
-  const [row, setRow] = useState(0);
+  const [row] = useState(0);
 
   const addLetter = (letter: string) => {
     setBoard((prevState) => {
@@ -69,13 +105,55 @@ function Game() {
   };
 
   const checkWin = (guess: string) => {
-    if (guess.toLowerCase() === answer.toLowerCase()) {
-      alert("You win!");
-    } else if (row < board.length - 1) {
-      setRow((prevRow) => prevRow + 1);
-    } else {
-      alert("You lose!");
+    let editableAnswer = answer;
+    for (let col = 0; col < board[row].length; col++) {
+      if (board[row][col].value.toLowerCase() === editableAnswer.charAt(col)) {
+        editableAnswer = editableAnswer.replace(
+          editableAnswer.charAt(col),
+          "-",
+        );
+        setBoard((prevState) => {
+          const currentBoard = [...prevState];
+          currentBoard[row][col].status = "correct";
+          return currentBoard;
+        });
+      }
     }
+    for (let col = 0; col < board[row].length; col++) {
+      if (editableAnswer.includes(board[row][col].value.toLowerCase())) {
+        editableAnswer = editableAnswer.replace(
+          editableAnswer.charAt(
+            editableAnswer.indexOf(board[row][col].value.toLowerCase()),
+          ),
+          "-",
+        );
+        setBoard((prevState) => {
+          const currentBoard = [...prevState];
+          board[row][col].status = "present";
+          return currentBoard;
+        });
+      }
+    }
+
+    // for (let col = 0; col < board[row].length; col++) {
+    //   if (board[row][col].status === "null") {
+    //     setBoard((prevState) => {
+    //       const currentBoard = [...prevState];
+    //       board[row][col].status = "incorrect";
+    //       return currentBoard;
+    //     });
+    //   }
+    // }
+
+    //   console.log(editableAnswer);
+    // }
+    // if (guess.toLowerCase() === answer.toLowerCase()) {
+    //   alert("You win!");
+    // } else if (row < board.length - 1) {
+    //   setRow((prevRow) => prevRow + 1);
+    // } else {
+    //   alert("You lose!");
+    // }
   };
 
   const setBoardWrapper = (value: string) => {
