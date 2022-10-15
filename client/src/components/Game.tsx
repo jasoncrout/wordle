@@ -13,12 +13,48 @@ function Game() {
   }, []);
 
   const [board, setBoard] = useState([
-    [{ value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }],
-    [{ value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }],
-    [{ value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }],
-    [{ value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }],
-    [{ value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }],
-    [{ value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }],
+    [
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+    ],
+    [
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+    ],
+    [
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+    ],
+    [
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+    ],
+    [
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+    ],
+    [
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+      { value: "", status: "null" },
+    ],
   ]);
 
   const [row, setRow] = useState(0);
@@ -26,9 +62,9 @@ function Game() {
   const addLetter = (letter: string) => {
     setBoard((prevState) => {
       const currentBoard = [...prevState];
-      for (let col = 0; col < board[row].length; col++) {
-        if (currentBoard[row][col].value === "") {
-          currentBoard[row][col].value = letter;
+      for (const cell of currentBoard[row]) {
+        if (cell.value === "") {
+          cell.value = letter;
           break;
         }
       }
@@ -56,16 +92,48 @@ function Game() {
     });
   };
 
-  const enter = () => {
+  const validateWord = () => {
     let word = "";
-    for (let col = 0; col < board[row].length; col++) {
-      if (board[row][col].value === "") {
-        return null;
+    for (const cell of board[row]) {
+      if (cell.value === "") {
+        return false;
       } else {
-        word += board[row][col].value;
+        word += cell.value;
       }
     }
     return word;
+  };
+
+  const updateBoard = () => {
+    const newBoard = [...board];
+    const answerArray = answer.split("");
+
+    // set all cells to incorrect
+    for (let col = 0; col < board[row].length; col++) {
+      newBoard[row][col].status = "incorrect";
+    }
+
+    // set correct cells to correct
+    for (let col = 0; col < board[row].length; col++) {
+      if (board[row][col].value.toLowerCase() === answerArray[col]) {
+        answerArray[col] = "-";
+        newBoard[row][col].status = "correct";
+      }
+    }
+
+    // set present cells to present
+    for (let col = 0; col < board[row].length; col++) {
+      if (answerArray.includes(board[row][col].value.toLowerCase())) {
+        if (newBoard[row][col].status === "incorrect") {
+          answerArray[
+            answerArray.indexOf(board[row][col].value.toLowerCase())
+          ] = "-";
+          newBoard[row][col].status = "present";
+        }
+      }
+    }
+
+    setBoard(newBoard);
   };
 
   const checkWin = (guess: string) => {
@@ -79,15 +147,19 @@ function Game() {
   };
 
   const setBoardWrapper = (value: string) => {
-    if (value === "⌫") {
-      removeLetter();
-    } else if (value === "enter") {
-      const word = enter();
-      if (word) {
-        checkWin(word);
-      }
-    } else {
-      addLetter(value);
+    switch (value) {
+      case "enter":
+        const guess = validateWord();
+        if (guess) {
+          updateBoard();
+          checkWin(guess);
+        }
+        break;
+      case "⌫":
+        removeLetter();
+        break;
+      default:
+        addLetter(value);
     }
   };
 
