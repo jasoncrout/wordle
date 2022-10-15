@@ -57,14 +57,14 @@ function Game() {
     ],
   ]);
 
-  const [row] = useState(0);
+  const [row, setRow] = useState(0);
 
   const addLetter = (letter: string) => {
     setBoard((prevState) => {
       const currentBoard = [...prevState];
-      for (let col = 0; col < board[row].length; col++) {
-        if (currentBoard[row][col].value === "") {
-          currentBoard[row][col].value = letter;
+      for (const cell of currentBoard[row]) {
+        if (cell.value === "") {
+          cell.value = letter;
           break;
         }
       }
@@ -92,80 +92,74 @@ function Game() {
     });
   };
 
-  const enter = () => {
+  const validateWord = () => {
     let word = "";
-    for (let col = 0; col < board[row].length; col++) {
-      if (board[row][col].value === "") {
-        return null;
+    for (const cell of board[row]) {
+      if (cell.value === "") {
+        return false;
       } else {
-        word += board[row][col].value;
+        word += cell.value;
       }
     }
     return word;
   };
 
+  const updateBoard = () => {
+    const newBoard = [...board];
+    const answerArray = answer.split("");
+
+    // set all cells to incorrect
+    for (let col = 0; col < board[row].length; col++) {
+      newBoard[row][col].status = "incorrect";
+    }
+
+    // set correct cells to correct
+    for (let col = 0; col < board[row].length; col++) {
+      if (board[row][col].value.toLowerCase() === answerArray[col]) {
+        answerArray[col] = "-";
+        newBoard[row][col].status = "correct";
+      }
+    }
+
+    // set present cells to present
+    for (let col = 0; col < board[row].length; col++) {
+      if (answerArray.includes(board[row][col].value.toLowerCase())) {
+        if (newBoard[row][col].status === "incorrect") {
+          answerArray[
+            answerArray.indexOf(board[row][col].value.toLowerCase())
+          ] = "-";
+          newBoard[row][col].status = "present";
+        }
+      }
+    }
+
+    setBoard(newBoard);
+  };
+
   const checkWin = (guess: string) => {
-    let editableAnswer = answer;
-    for (let col = 0; col < board[row].length; col++) {
-      if (board[row][col].value.toLowerCase() === editableAnswer.charAt(col)) {
-        editableAnswer = editableAnswer.replace(
-          editableAnswer.charAt(col),
-          "-",
-        );
-        setBoard((prevState) => {
-          const currentBoard = [...prevState];
-          currentBoard[row][col].status = "correct";
-          return currentBoard;
-        });
-      }
+    if (guess.toLowerCase() === answer.toLowerCase()) {
+      alert("You win!");
+    } else if (row < board.length - 1) {
+      setRow((prevRow) => prevRow + 1);
+    } else {
+      alert("You lose!");
     }
-    for (let col = 0; col < board[row].length; col++) {
-      if (editableAnswer.includes(board[row][col].value.toLowerCase())) {
-        editableAnswer = editableAnswer.replace(
-          editableAnswer.charAt(
-            editableAnswer.indexOf(board[row][col].value.toLowerCase()),
-          ),
-          "-",
-        );
-        setBoard((prevState) => {
-          const currentBoard = [...prevState];
-          board[row][col].status = "present";
-          return currentBoard;
-        });
-      }
-    }
-
-    // for (let col = 0; col < board[row].length; col++) {
-    //   if (board[row][col].status === "null") {
-    //     setBoard((prevState) => {
-    //       const currentBoard = [...prevState];
-    //       board[row][col].status = "incorrect";
-    //       return currentBoard;
-    //     });
-    //   }
-    // }
-
-    //   console.log(editableAnswer);
-    // }
-    // if (guess.toLowerCase() === answer.toLowerCase()) {
-    //   alert("You win!");
-    // } else if (row < board.length - 1) {
-    //   setRow((prevRow) => prevRow + 1);
-    // } else {
-    //   alert("You lose!");
-    // }
   };
 
   const setBoardWrapper = (value: string) => {
-    if (value === "⌫") {
-      removeLetter();
-    } else if (value === "enter") {
-      const word = enter();
-      if (word) {
-        checkWin(word);
-      }
-    } else {
-      addLetter(value);
+    switch (value) {
+      case "enter":
+        const guess = validateWord();
+        if (guess) {
+          updateBoard();
+          checkWin(guess);
+        }
+        break;
+      case "⌫":
+        removeLetter();
+        break;
+      default:
+        addLetter(value);
     }
   };
 
