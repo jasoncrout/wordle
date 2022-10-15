@@ -34,6 +34,56 @@
   aspect-ratio: 1;
 }
 
+@keyframes horizontal-shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.shake {
+  animation-name: horizontal-shake;
+  animation-duration: 0.5s;
+  -webkit-animation-name: horizontal-shake;
+  -webkit-animation-duration: 0.5s;
+}
+
+@keyframes vertical-hop {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(5px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  75% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.vertical-hop {
+  animation-name: vertical-hop;
+  animation-duration: 2s;
+  -webkit-animation-name: vertical-hop;
+  -webkit-animation-duration: 0.5s;
+}
+
 @media screen and (max-width: 1200px) {
   .Board-game {
     width: 80%;
