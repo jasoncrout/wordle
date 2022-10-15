@@ -5,6 +5,9 @@ import "./Game.css";
 import Keyboard from "./Keyboard";
 
 function Game() {
+  const wait = (delay: number) =>
+    new Promise((resolve) => setTimeout(resolve, delay));
+
   const [answer, setAnswer] = useState("");
   useEffect(() => {
     const randomWord = words[(Math.random() * words.length) | 0];
@@ -93,6 +96,7 @@ function Game() {
   };
 
   const validateWord = () => {
+    // check if letters equals five
     let word = "";
     for (const cell of board[row]) {
       if (cell.value === "") {
@@ -100,6 +104,16 @@ function Game() {
       } else {
         word += cell.value;
       }
+    }
+
+    // check if word exists in words list
+    if (!words.includes(word.toLowerCase())) {
+      const elementRow = document.getElementsByClassName("Board-row");
+      elementRow[row].classList.add("shake");
+      setTimeout(() => {
+        elementRow[row].classList.remove("shake");
+      }, 500);
+      return false;
     }
     return word;
   };
@@ -136,13 +150,32 @@ function Game() {
     setBoard(newBoard);
   };
 
-  const checkWin = (guess: string) => {
+  const animateWin = async () => {
+    const elements = document.getElementsByClassName("Board-cell");
+    for (let tile = 0; tile < 5 * (row + 1); tile++) {
+      elements[tile].classList.add("vertical-hop");
+      setTimeout(() => {
+        elements[tile].classList.remove("vertical-hop");
+      }, 500);
+      await wait(80);
+    }
+  };
+
+  const animateLoss = async () => {
+    const elementRow = document.getElementsByClassName("Board-game");
+    elementRow[0].classList.add("shake");
+    setTimeout(() => {
+      elementRow[0].classList.remove("shake");
+    }, 500);
+  };
+
+  const checkWin = async (guess: string) => {
     if (guess.toLowerCase() === answer.toLowerCase()) {
-      alert("You win!");
+      animateWin();
     } else if (row < board.length - 1) {
       setRow((prevRow) => prevRow + 1);
     } else {
-      alert("You lose!");
+      animateLoss();
     }
   };
 
